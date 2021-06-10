@@ -1,35 +1,30 @@
-
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
-  entry: "./src/index.js",
+  // 开发环境
+  mode: "development",
+  
+  // 入口
+  entry: {
+    main: "./src/index.js",
+    print: "./src/print.js"
+  },
+
+  // 输出
   output: {
-    filename: "bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
   },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.(png|svg|gif|jpg)$/i,
-        use: [
-          'file-loader', // 将文件解析为url，并且将文件输出输出目录中
-          {
-           loader: 'image-webpack-loader',
-            options: {
-              bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-            },
-          },
-        ] 
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader']
-      }
-    ]
-  },
-  plugins: [],
+  
+  // 插件
+  plugins: [
+    // 每次打包之前将dist 文件下清空
+    new CleanWebpackPlugin(),
+    // 自动生成 html 文件， 并把我们需要的js 引用上
+    new HtmlWebpackPlugin({
+      title: "资源管理",
+    }),
+    
+  ],
 }

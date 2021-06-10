@@ -1,20 +1,16 @@
 import _ from "loadsh";
-import "./style.css";
-import img from "./1.png"
-import data from "./i";
+import printMe from './print.js'
 function component() {
   const element = document.createElement('div');
+  var btn = document.createElement('button');
 
   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
   element.classList.add("hello");
 
-  var myIcon = document.createElement('img');
-  myIcon.classList.add("img")
-  myIcon.src = img;
-  element.appendChild(myIcon);
-  console.log(data)
-
-
+  btn.innerHTML = "点击我";
+  btn.onclick = printMe;
+  element.append(btn);
+  
   return element;
 }
 
