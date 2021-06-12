@@ -2,23 +2,17 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require('webpack');
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   // 开发环境
-  mode: "development",
+  mode: "production",
   
   // 入口
   entry: {
-    app: "./src/index.js",
+    main: "./src/index.js",
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.css$/,
-  //       use: ['style-loader',, 'css-loader']
-  //     }
-  //   ]
-  // },
-  
+
+  // loader
   module: {
     rules: [
       {
@@ -52,6 +46,12 @@ module.exports = {
     contentBase: "./dist",
     hot: true,
     hotOnly: true
+  },
+
+  optimization: {
+    usedExports: true, // 开启 tree shaking，
+    minimizer:  [new TerserPlugin()]
+
   },
   
   // 插件
